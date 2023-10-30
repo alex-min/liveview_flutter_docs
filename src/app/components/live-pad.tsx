@@ -28,6 +28,7 @@ function loadCode(code: string) {
   // @ts-expect-error
   document.getElementById('flutter')?.contentWindow.postMessage(code);
 }
+setTimeout(() => loadCode(demo), 1500);
 
 export function LivePad() {
   var [value, setValue] = React.useState(demo);
