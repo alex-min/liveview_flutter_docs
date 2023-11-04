@@ -3,11 +3,11 @@ let codeMap = {
   "bottom-bar":
     `<flutter>
   <viewBody />
-  <BottomNavigationBar currentIndex="0" selectedItemColor="blue-500">
-    <BottomNavigationBarIcon name="home" label="Home" />
-    <BottomNavigationBarIcon name="wallet" label="Wallet" />
-    <BottomNavigationBarIcon name="apps" label="Photos" />
-    <BottomNavigationBarIcon name="window" label="Albums" />
+  <BottomNavigationBar initialValue="0" selectedItemColor="blue-500">
+    <BottomNavigationBarItem icon="home" label="Home" />
+    <BottomNavigationBarItem icon="wallet" label="Wallet" />
+    <BottomNavigationBarItem icon="apps" label="Photos" />
+    <BottomNavigationBarItem icon="window" label="Albums" />
   </BottomNavigationBar>
 </flutter>
 `, "AppBar": `<flutter>
@@ -22,7 +22,7 @@ let codeMap = {
 <viewBody>Content of the page</viewBody>
 </flutter>`, "navigation-rail": `<flutter>
   <viewBody />
-  <NavigationRail labelType="all" selectedIndex="0" selectedItemColor="blue-500">
+  <NavigationRail labelType="all" inititalValue="0" selectedItemColor="blue-500">
     <NavigationRailDestination icon="home" label="Home" />
     <NavigationRailDestination icon="wallet" label="Wallet" />
     <NavigationRailDestination icon="apps" label="Photos" />

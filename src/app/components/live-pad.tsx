@@ -9,17 +9,32 @@ import codeMap from '../code-demos';
 
 var demo =
   `<flutter>
+  <AppBar elevation="1">
+    <leading><Icon name="menu" /></leading>
+    <title>My new live view native app</title>
+  </AppBar>
+
+  <Drawer>
+    <Text>Drawer</Text>
+  </Drawer>
+
   <viewBody>
-    <Center>
-      <ElevatedButton>hello world</ElevatedButton>
-    </Center>
+    <Column mainAxisAlignment="center">
+      <Container padding="10 0">
+        <Text textAlign="center" style="textTheme: headlineMedium">This is a live view code rendering of Flutter</Text>
+      </Container>
+      <Container padding="10 0">
+        <Text>Edit the code on the left to see your changes live in flutter</Text>
+      </Container>
+      <ElevatedButton>Start now</ElevatedButton>
+    </Column>
   </viewBody>
 
-  <BottomNavigationBar currentIndex="0" selectedItemColor="blue-500">
-    <BottomNavigationBarIcon name="home" label="Page 1" />
-    <BottomNavigationBarIcon live-patch="/second-page" name="home" label="Page 2" />
-    <BottomNavigationBarIcon phx-click="inc" name="arrow_upward" label="Increment" />
-    <BottomNavigationBarIcon phx-click="dec" name="arrow_downward" label="Decrement" />
+  <BottomNavigationBar initialValue="0" selectedItemColor="blue-500">
+    <BottomNavigationBarItem icon="home" label="Home" />
+    <BottomNavigationBarItem icon="wallet" label="Wallet" />
+    <BottomNavigationBarItem icon="apps" label="Photos" />
+    <BottomNavigationBarItem icon="window" label="Albums" />
   </BottomNavigationBar>
 </flutter>
 `
@@ -28,7 +43,6 @@ function loadCode(code: string) {
   // @ts-expect-error
   document.getElementById('flutter')?.contentWindow.postMessage(code);
 }
-setTimeout(() => loadCode(demo), 1500);
 
 export function LivePad() {
   var [value, setValue] = React.useState(demo);
@@ -58,6 +72,6 @@ export function LivePad() {
           onChange={(val) => loadCode(val)} />
       </div>
     </div>
-    <iframe id="flutter" src="/flutter/index.html" height="600" className="w-1/2 max-w-md rounded-r-lg" />
+    <iframe id="flutter" src={`/flutter/index.html?r=${encodeURIComponent(demo)}`} height="600" className="w-1/2 max-w-md rounded-r-lg" />
   </div>
 }
