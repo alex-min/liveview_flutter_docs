@@ -13,7 +13,7 @@ let codeMap = {
 `, "AppBar": `<flutter>
 <AppBar elevation="1">
   <leading>
-    <Icon name="menu"  as="leading" />
+    <Icon name="menu" />
   </leading>
   <title>
     <Text>hello</Text>

@@ -10,12 +10,14 @@ import codeMap from '../code-demos';
 var demo =
   `<flutter>
   <AppBar elevation="1">
-    <leading><Icon name="menu" /></leading>
     <title>My new live view native app</title>
   </AppBar>
 
   <Drawer>
-    <Text>Drawer</Text>
+    <ListView>
+      <DrawerHeader />
+      <Text>Welcome to the second menu!</Text>
+    </ListView>
   </Drawer>
 
   <viewBody>
@@ -63,9 +65,10 @@ export function LivePad() {
           fontFamily: 'Menlo, Monaco, Consolas, "Andale Mono", "Ubuntu Mono", "Courier New", monospace'
         }}>~FLUTTER"""</div>
         <CodeMirror
+          autoFocus
           lang="xml"
           value={value}
-          height="100%"
+          height="590px"
           theme={vscodeDark}
           // @ts-expect-error
           extensions={[xml({ base: xmlLanguage, codeLanguages: languages })]}
