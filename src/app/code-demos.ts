@@ -1,6 +1,6 @@
 
 let codeMap = {
-  "bottom-bar":
+  "BottomNavigationBar":
     `<flutter>
   <viewBody />
   <BottomNavigationBar initialValue="0" selectedItemColor="blue-500">
@@ -20,7 +20,7 @@ let codeMap = {
   </title>
 </AppBar>
 <viewBody>Content of the page</viewBody>
-</flutter>`, "navigation-rail": `<flutter>
+</flutter>`, "NavigationRail": `<flutter>
   <viewBody />
   <NavigationRail labelType="all" inititalValue="0" selectedItemColor="blue-500">
     <NavigationRailDestination icon="home" label="Home" />
@@ -40,11 +40,23 @@ let codeMap = {
   "TextField": `<flutter>
   <viewBody>
     <Container padding="40">
-      <TextField value="hello@example.org" />
-      <TextField value="mypassword" obscureText="true" />
+      <TextField initialValue="hello@example.org" />
+      <TextField initialValue="mypassword" obscureText="true" />
     </Container>
   </viewBody>
-</flutter>
-`}
+</flutter>`,
+  "SegmentedButton": `
+  <flutter>
+    <viewBody>
+      <Center>
+        <SegmentedButton initialValue="1" name="button-group">
+        <ButtonSegment name="1" label="first choice" icon="home" />
+        <ButtonSegment name="2" label="second choice" icon="home" />
+        <ButtonSegment name="3" label="third choice" icon="home" />
+        </SegmentedButton>
+      </Center>
+    </viewBody>
+  </flutter>`
+}
 
 export default codeMap;

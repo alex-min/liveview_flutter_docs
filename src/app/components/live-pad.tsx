@@ -46,8 +46,9 @@ function loadCode(code: string) {
   document.getElementById('flutter')?.contentWindow.postMessage(code);
 }
 
-export function LivePad() {
-  var [value, setValue] = React.useState(demo);
+export function LivePad({preload}: {preload?: string} = {}) {
+  // @ts-ignore
+  var [value, setValue] = React.useState(preload ? codeMap[preload]: demo);
 
   emitter.on('code-change', (val: string) => {
 
@@ -75,6 +76,9 @@ export function LivePad() {
           onChange={(val) => loadCode(val)} />
       </div>
     </div>
-    <iframe id="flutter" src={`/flutter/index.html?r=${encodeURIComponent(demo)}`} height="600" className="w-1/2 max-w-md rounded-r-lg" />
+    <iframe id="flutter"
+     src={`/flutter/index.html?r=${encodeURIComponent(value)}`} 
+     height="600" 
+     className="w-1/2 max-w-md rounded-r-lg bg-white" />
   </div>
 }
