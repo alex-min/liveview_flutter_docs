@@ -1,7 +1,7 @@
 'use client';
-import { LivePad } from '../components/live-pad';
-import { Menu } from '../components/menu';
-import { TopBar } from './../components/top-bar';
+import { LivePad } from '../../components/live-pad';
+import { Menu } from '../../components/menu';
+import { TopBar } from '../../components/top-bar';
 
 
 export default function Home() {
