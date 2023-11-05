@@ -89,6 +89,12 @@ export function LivePad({ preload }: { preload?: string } = {}) {
       }, false)
   }, []);
 
+  // annoying iframe caching on some browsers
+  React.useEffect(() => {
+    var iframe = document.getElementById('flutter') as HTMLIFrameElement;
+    iframe.src = iframe.src + `&s=${new Date().getTime()}`
+  }, []);
+
   emitter.on('code-change', (val: string) => {
     // @ts-ignore
     let code = codeMap[val];
@@ -115,8 +121,7 @@ export function LivePad({ preload }: { preload?: string } = {}) {
       </div>
     </div>
     <iframe id="flutter"
-      // to avoid iframe caching
-      src={`/flutter/${preload || 'demo'}/index.html?r=${encodeURIComponent(initialCodeValue ?? '')}`}
+      src={`/flutter/index.html?r=${encodeURIComponent(initialCodeValue ?? '')}`}
       height="600"
       className="w-1/2 max-w-md rounded-r-lg bg-white" />
     <Snackbar open={snackbarOpened}
