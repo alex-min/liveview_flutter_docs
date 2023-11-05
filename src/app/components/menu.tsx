@@ -20,6 +20,7 @@ import AdsClickIcon from '@mui/icons-material/AdsClick';
 import Crop169Icon from '@mui/icons-material/Crop169';
 import PowerInputIcon from '@mui/icons-material/PowerInput';
 import FormatColorTextIcon from '@mui/icons-material/FormatColorText';
+import AllInboxIcon from '@mui/icons-material/AllInbox';
 
 enum NavbarItem {
   navigation, buttons
@@ -109,6 +110,15 @@ export function Menu() {
           <FormatColorTextIcon />
         </ListItemIcon>
         <ListItemText primary="Text Field" />
+      </ListItemButton>
+      <ListItemButton onClick={() => {
+            history.pushState({ component: 'Form' }, '', '/component/form')
+            emitter.emit('code-change', 'Form')
+          }}>
+        <ListItemIcon>
+          <AllInboxIcon />
+        </ListItemIcon>
+        <ListItemText primary="Form" />
       </ListItemButton>
     </List>
   </div>

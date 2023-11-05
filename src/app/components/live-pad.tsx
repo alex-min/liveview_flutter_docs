@@ -6,6 +6,24 @@ import { languages } from '@codemirror/language-data';
 import { vscodeDark } from '@uiw/codemirror-theme-vscode';
 import emitter from '../event-bus';
 import codeMap from '../code-demos';
+import { Snackbar } from '@mui/material';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import DataObjectIcon from '@mui/icons-material/DataObject';
+import List from '@mui/material/List';
+import ListItem from '@mui/material/ListItem';
+import ListItemButton from '@mui/material/ListItemButton';
+import ListItemIcon from '@mui/material/ListItemIcon';
+import ListItemText from '@mui/material/ListItemText';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+  props,
+  ref,
+) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
+
+
 
 var demo =
   `<flutter>
@@ -46,9 +64,32 @@ function loadCode(code: string) {
   document.getElementById('flutter')?.contentWindow.postMessage(code);
 }
 
-export function LivePad({preload}: {preload?: string} = {}) {
+var initialCodeValue: string | undefined;
+
+export function LivePad({ preload }: { preload?: string } = {}) {
   // @ts-ignore
-  var [value, setValue] = React.useState(preload ? codeMap[preload]: demo);
+  var [value, setValue] = React.useState(preload ? codeMap[preload] : demo);
+  var [snackbarOpened, setSnackbarOpened] = React.useState(false);
+  var [snackbarEvent, setSnackbarEvent] = React.useState('');
+  var [snackbarMessage, setSnackbarMessage] = React.useState('');
+
+  if (typeof initialCodeValue === 'undefined') {
+    initialCodeValue = value;
+  }
+
+  React.useEffect(() => {
+    window.addEventListener(
+      "message",
+      (event) => {
+        if (event.origin != window.origin) { return; }
+        var data = event.data as any;
+        if (typeof data.type != 'string') { return }
+
+        setSnackbarEvent(data.data.event)
+        setSnackbarMessage(data.data.value);
+        setSnackbarOpened(true);
+      }, false)
+  }, []);
 
   emitter.on('code-change', (val: string) => {
 
@@ -77,8 +118,30 @@ export function LivePad({preload}: {preload?: string} = {}) {
       </div>
     </div>
     <iframe id="flutter"
-     src={`/flutter/index.html?r=${encodeURIComponent(value)}`} 
-     height="600" 
-     className="w-1/2 max-w-md rounded-r-lg bg-white" />
+      src={`/flutter/index.html?r=${encodeURIComponent(initialCodeValue ?? '')}`}
+      height="600"
+      className="w-1/2 max-w-md rounded-r-lg bg-white" />
+    <Snackbar open={snackbarOpened}
+      autoHideDuration={3000}
+      onClose={() => setSnackbarOpened(false)}
+      message={<List dense>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <ArrowForwardIosIcon color="info" />
+              </ListItemIcon>
+              <ListItemText primary={`Server event: ${snackbarEvent}`} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <DataObjectIcon color="info" />
+              </ListItemIcon>
+              <ListItemText primary={`Message sent: ${snackbarMessage}`} />
+            </ListItemButton>
+          </ListItem>
+        </List>} 
+      />
   </div>
 }

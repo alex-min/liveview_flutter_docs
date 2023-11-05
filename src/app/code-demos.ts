@@ -56,7 +56,34 @@ let codeMap = {
         </SegmentedButton>
       </Center>
     </viewBody>
-  </flutter>`
+  </flutter>`,
+  'Form': `
+<flutter>
+  <Container padding="20">
+    <Form phx-change="validate" phx-submit="submit">
+      <Column crossAxisAlignment="start">
+        <TextField name="login" initialValue="hello@example.org" />
+        <TextField name="password" initialValue="hunter2" obscureText="true" />
+        <Container padding="20 0">
+          <Row>
+            <Checkbox />
+            <Text>Remember me</Text>
+          </Row>
+        </Container>
+        <Container padding="20 0">
+          <Text>Choose your account type:</Text>
+          <SegmentedButton initialValue="1" name="button-group">
+            <ButtonSegment name="1" label="Admin" icon="home" />
+            <ButtonSegment name="2" label="Normal user" icon="home" />
+            <ButtonSegment name="3" label="Read only" icon="home" />
+          </SegmentedButton>
+        </Container>
+        <ElevatedButton name="submit-btn" type="submit">Submit form</ElevatedButton>
+      </Column>
+    </Form>
+  </Container>
+</flutter>
+  `
 }
 
 export default codeMap;
