@@ -66,7 +66,7 @@ let codeMap = {
         <TextField name="password" initialValue="hunter2" obscureText="true" />
         <Container padding="20 0">
           <Row>
-            <Checkbox />
+            <Checkbox name="remember_me" />
             <Text>Remember me</Text>
           </Row>
         </Container>

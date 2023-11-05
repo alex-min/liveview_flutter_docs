@@ -74,7 +74,8 @@ export function LivePad({ preload }: { preload?: string } = {}) {
   var [snackbarMessage, setSnackbarMessage] = React.useState('');
 
   if (typeof initialCodeValue === 'undefined') {
-    initialCodeValue = value;
+    // @ts-ignore
+    initialCodeValue = preload ? codeMap[preload] : demo;
   }
 
   React.useEffect(() => {
