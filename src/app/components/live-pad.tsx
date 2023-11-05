@@ -116,8 +116,7 @@ export function LivePad({ preload }: { preload?: string } = {}) {
     </div>
     <iframe id="flutter"
       // to avoid iframe caching
-      name={preload || 'demo'}
-      src={`/flutter/index.html?r=${encodeURIComponent(initialCodeValue ?? '')}`}
+      src={`/flutter/${preload || 'demo'}/index.html?r=${encodeURIComponent(initialCodeValue ?? '')}`}
       height="600"
       className="w-1/2 max-w-md rounded-r-lg bg-white" />
     <Snackbar open={snackbarOpened}
