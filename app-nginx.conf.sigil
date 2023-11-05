@@ -22,13 +22,6 @@ http {
     index index.html;
     port_in_redirect off;
 
-    location ~ ^/flutter/([^/]+)/(.*) {
-       set $dynamic_part $1;
-       set $file_path $2;
-
-      try_files /flutter/$file_path =404;
-    }
-
     location / {
       {{ if ne $.NGINX_DEFAULT_REQUEST "" }}
         try_files $uri $uri/ $uri.html /{{ $.NGINX_DEFAULT_REQUEST }};
