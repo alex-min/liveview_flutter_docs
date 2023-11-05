@@ -90,9 +90,6 @@ export function LivePad({ preload }: { preload?: string } = {}) {
   }, []);
 
   emitter.on('code-change', (val: string) => {
-    console.log("CODE CHANGE", val);
-    console.log(new Error().stack)
-
     // @ts-ignore
     let code = codeMap[val];
 
@@ -118,6 +115,8 @@ export function LivePad({ preload }: { preload?: string } = {}) {
       </div>
     </div>
     <iframe id="flutter"
+      // to avoid iframe caching
+      name={preload || 'demo'}
       src={`/flutter/index.html?r=${encodeURIComponent(initialCodeValue ?? '')}`}
       height="600"
       className="w-1/2 max-w-md rounded-r-lg bg-white" />
