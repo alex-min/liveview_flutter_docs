@@ -90,6 +90,8 @@ export function LivePad({ preload }: { preload?: string } = {}) {
   }, []);
 
   emitter.on('code-change', (val: string) => {
+    console.log("CODE CHANGE", val);
+    console.log(new Error().stack)
 
     // @ts-ignore
     let code = codeMap[val];
