@@ -64,19 +64,16 @@ function loadCode(code: string) {
   document.getElementById('flutter')?.contentWindow.postMessage(code);
 }
 
-var initialCodeValue: string | undefined;
 
 export function LivePad({ preload }: { preload?: string } = {}) {
   // @ts-ignore
   var [value, setValue] = React.useState(preload ? codeMap[preload] : demo);
+    // @ts-ignore
+  var initialCodeValue = React.useMemo(() => preload ? codeMap[preload] : demo,  [preload]);
+
   var [snackbarOpened, setSnackbarOpened] = React.useState(false);
   var [snackbarEvent, setSnackbarEvent] = React.useState('');
   var [snackbarMessage, setSnackbarMessage] = React.useState('');
-
-  if (typeof initialCodeValue === 'undefined') {
-    // @ts-ignore
-    initialCodeValue = preload ? codeMap[preload] : demo;
-  }
 
   React.useEffect(() => {
     window.addEventListener(
