@@ -22,8 +22,11 @@ http {
     index index.html;
     port_in_redirect off;
 
-    location ~ ^/flutter/(.*)$ {
-        try_files /public/flutter/index.html =404;
+    location ~ ^/flutter/([^/]+)/(.*) {
+       set $dynamic_part $1;
+       set $file_path $2;
+
+      try_files /flutter/$file_path =404;
     }
 
     location / {
