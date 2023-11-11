@@ -6,11 +6,17 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 
-export function TopBar() {
+interface Props {
+    showMenuIcon: boolean
+    onClickMenuIcon: () => void
+}
+
+export function TopBar({ showMenuIcon, onClickMenuIcon }: Props) {
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static" className="bg-slate-800">
                 <Toolbar>
+                    {showMenuIcon ? <Button onClick={onClickMenuIcon} variant="text"><MenuIcon /></Button> : null}
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Live View Flutter Docs
                     </Typography>

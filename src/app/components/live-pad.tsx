@@ -15,6 +15,8 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -75,7 +77,8 @@ function loadCode(code: string) {
 }
 
 
-export function LivePad({ preload }: { preload?: string } = {}) {
+export function LivePad({ preload, useTabs }: { preload?: string, useTabs: boolean } = { useTabs: false }) {
+  var [currentTab, setCurrentTab] = React.useState('code');
   // @ts-ignore
   var [value, setValue] = React.useState(preload ? codeMap[preload] : demo);
   // @ts-ignore
@@ -123,8 +126,10 @@ export function LivePad({ preload }: { preload?: string } = {}) {
   // annoying iframe caching on some browsers
   React.useEffect(() => {
     var iframe = document.getElementById('flutter') as HTMLIFrameElement;
-    iframe.src = iframe.src + `&s=${new Date().getTime()}`
-  }, []);
+    if (iframe) {
+      iframe.src = iframe.src + `&s=${new Date().getTime()}`
+    }
+  }, [currentTab]);
 
   emitter.on('code-change', (val: string) => {
     // @ts-ignore
@@ -133,49 +138,56 @@ export function LivePad({ preload }: { preload?: string } = {}) {
     setValue(code);
     loadCode(code);
   });
-  return <div className="flex flex-row w-full justify-center mt-5">
-    <div className="rounded-l-lg w-1/2 overflow-hidden">
-      <div style={{ height: '600px', background: '#1e1e1e' }}>
-        <div className="pl-6 py-1" style={{
-          color: '#ce9178',
-          fontFamily: 'Menlo, Monaco, Consolas, "Andale Mono", "Ubuntu Mono", "Courier New", monospace'
-        }}>~FLUTTER"""</div>
-        <CodeMirror
-          autoFocus
-          lang="xml"
-          value={value}
-          height="590px"
-          theme={vscodeDark}
-          // @ts-expect-error
-          extensions={[xml({ base: xmlLanguage, codeLanguages: languages })]}
-          onChange={(val) => loadCode(val)} />
-      </div>
-    </div>
-    <iframe id="flutter"
-      src={`/flutter/index.html?r=${encodeURIComponent(initialCodeValue ?? '')}`}
-      height="600"
-      className="w-1/2 max-w-md rounded-r-lg bg-white" />
-    <Snackbar open={snackbarOpened}
-      autoHideDuration={3000}
-      onClose={() => setSnackbarOpened(false)}
-      message={<List dense>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <ArrowForwardIosIcon color="info" />
-            </ListItemIcon>
-            <ListItemText primary={`Server event: ${snackbarEvent}`} />
-          </ListItemButton>
-        </ListItem>
-        <ListItem disablePadding>
-          <ListItemButton>
-            <ListItemIcon>
-              <DataObjectIcon color="info" />
-            </ListItemIcon>
-            <ListItemText primary={`Message sent: ${snackbarMessage}`} />
-          </ListItemButton>
-        </ListItem>
-      </List>}
-    />
-  </div>
+  return <>
+    <div className={`flex ${useTabs ? 'flex-col items-center' : 'flex-row'} w-full justify-center mt-5`} style={useTabs ? { width: '600px' } : {}}>
+      {useTabs ? <Tabs value={currentTab} aria-label="basic tabs example" onChange={(_, tab) => setCurrentTab(tab)}>
+        <Tab label="Code" value="code" />
+        <Tab label="Mobile View" value="mobile" />
+      </Tabs> : null}
+      {!useTabs || currentTab == 'code' ? <div className={`rounded-l-lg ${useTabs ? 'rounded-lg' : 'w-1/2'} overflow-hidden`}>
+        <div style={{ height: '600px', background: '#1e1e1e', width: useTabs ? '600px' : undefined }}>
+          <div className="pl-6 py-1" style={{
+            color: '#ce9178',
+            fontFamily: 'Menlo, Monaco, Consolas, "Andale Mono", "Ubuntu Mono", "Courier New", monospace'
+          }}>~FLUTTER"""</div>
+          <CodeMirror
+            autoFocus
+            lang="xml"
+            value={value}
+            height="590px"
+            theme={vscodeDark}
+            // @ts-expect-error
+            extensions={[xml({ base: xmlLanguage, codeLanguages: languages })]}
+            onChange={(val) => loadCode(val)} />
+        </div>
+      </div> : null}
+      <iframe id="flutter"
+        src={`/flutter/index.html?r=${encodeURIComponent(initialCodeValue ?? '')}`}
+        height="600"
+        width={useTabs ? '600' : undefined}
+        style={useTabs && currentTab == 'code' ? { position: 'absolute', left: '-5000px' } : {}}
+        className={`${useTabs ? 'rounded-lg' : 'w-1/2'} max-w-md rounded-r-lg bg-white`} />
+      <Snackbar open={snackbarOpened}
+        autoHideDuration={3000}
+        onClose={() => setSnackbarOpened(false)}
+        message={<List dense>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <ArrowForwardIosIcon color="info" />
+              </ListItemIcon>
+              <ListItemText primary={`Server event: ${snackbarEvent}`} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                <DataObjectIcon color="info" />
+              </ListItemIcon>
+              <ListItemText primary={`Message sent: ${snackbarMessage}`} />
+            </ListItemButton>
+          </ListItem>
+        </List>}
+      />
+    </div></>
 }
