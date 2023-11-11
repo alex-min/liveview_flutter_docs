@@ -34,7 +34,14 @@ var demo =
   <Drawer>
     <ListView>
       <DrawerHeader />
-      <Text>Welcome to the second menu!</Text>
+      <Container padding="10">
+        <Form phx-change="validate" phx-submit="submit">
+          <TextField name="my_input" initialValue="Change me" />
+          <Container padding="10 0">
+            <ElevatedButton name="submit" type="submit">Submit</ElevatedButton>
+          </Container>
+        </Form>
+      </Container>
     </ListView>
   </Drawer>
 
@@ -46,15 +53,18 @@ var demo =
       <Container padding="10 0">
         <Text>Edit the code on the left to see your changes live in flutter</Text>
       </Container>
-      <ElevatedButton>Start now</ElevatedButton>
+      <Container padding="10 0">
+      <Text>The navigation on the bottom simulates a server event</Text>
+      </Container>
+      <ElevatedButton phx-click="start_now">Start now</ElevatedButton>
     </Column>
   </viewBody>
 
   <BottomNavigationBar initialValue="0" selectedItemColor="blue-500">
-    <BottomNavigationBarItem icon="home" label="Home" />
-    <BottomNavigationBarItem icon="wallet" label="Wallet" />
-    <BottomNavigationBarItem icon="apps" label="Photos" />
-    <BottomNavigationBarItem icon="window" label="Albums" />
+    <BottomNavigationBarItem icon="home" label="Home" live-patch="/page/0" />
+    <BottomNavigationBarItem icon="wallet" label="Wallet" live-patch="/page/1" />
+    <BottomNavigationBarItem icon="apps" label="Photos" live-patch="/page/2" />
+    <BottomNavigationBarItem icon="window" label="Albums" live-patch="/page/3"  />
   </BottomNavigationBar>
 </flutter>
 `
@@ -85,7 +95,7 @@ export function LivePad({ preload }: { preload?: string } = {}) {
 
         if (data.type == 'live-patch') {
           // @ts-ignore
-          var code = (preload ? codeMap[preload] : demo) + '';
+          var code = (value) + '';
           if (data.url.match(/\/page\/\d/g)) {
             var path = data.url.split('/')
             code = code.split('\n').map((line) => {
@@ -104,11 +114,11 @@ export function LivePad({ preload }: { preload?: string } = {}) {
             loadCode(code), 50);
         } else {
           setSnackbarEvent(data.data.event)
-          setSnackbarMessage(data.data.value);
+          setSnackbarMessage(typeof data.data.value == 'string' ? data.data.value : JSON.stringify(data.data.value));
           setSnackbarOpened(true);
         }
       }, false)
-  }, []);
+  }, [value]);
 
   // annoying iframe caching on some browsers
   React.useEffect(() => {
