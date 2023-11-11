@@ -17,7 +17,7 @@ var breakpoints = {
 function ResponsiveMenu({ drawerOpened, setDrawerOpened }: { drawerOpened: boolean, setDrawerOpened: (val: boolean) => void }) {
     var { width } = useWindowDimensions();
 
-    ''    if (typeof width == 'number' && width < breakpoints.menu) {
+    if (typeof width == 'number' && width < breakpoints.menu) {
         return <React.Fragment key='left'>
             <Drawer
                 anchor={'left'}
