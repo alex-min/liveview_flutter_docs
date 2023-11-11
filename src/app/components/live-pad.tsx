@@ -176,8 +176,9 @@ export function LivePad({ preload, useTabs }: { preload?: string, useTabs: boole
         style={useTabs && currentTab == 'code' ? { position: 'absolute', left: '-5000px' } : {}}
         className={`${useTabs ? 'rounded-lg' : 'w-1/2'} max-w-md rounded-r-lg bg-white`} />
       <Snackbar open={snackbarOpened}
-        autoHideDuration={3000}
+        autoHideDuration={useTabs ? 1000 : 3000}
         onClose={() => setSnackbarOpened(false)}
+        anchorOrigin={useTabs ? { vertical: 'top', horizontal: 'right' } : { vertical: 'bottom', horizontal: 'left' }}
         message={<List dense>
           <ListItem disablePadding>
             <ListItemButton>
