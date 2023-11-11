@@ -144,7 +144,9 @@ export function LivePad({ preload, useTabs }: { preload?: string, useTabs: boole
 
   return <>
     <div className={`flex ${useTabs ? 'flex-col items-center' : 'flex-row'} w-full justify-center mt-5`} style={useTabs ? { width: `${width || 600}px` } : {}}>
-      {useTabs ? <Tabs value={currentTab} aria-label="basic tabs example" onChange={(_, tab) => setCurrentTab(tab)}>
+      {useTabs ? <Tabs value={currentTab} aria-label="basic tabs example" onChange={(_, tab) => {
+        setCurrentTab(tab)
+      }}>
         <Tab label="Code" value="code" />
         <Tab label="Mobile View" value="mobile" />
       </Tabs> : null}
@@ -171,7 +173,7 @@ export function LivePad({ preload, useTabs }: { preload?: string, useTabs: boole
         </div>
       </div> : null}
       <iframe id="flutter"
-        src={`/flutter/index.html?r=${encodeURIComponent(initialCodeValue ?? '')}`}
+        src={`/flutter/index.html?r=${encodeURIComponent(useTabs ? value : (initialCodeValue || ''))}`}
         height={useTabs ? `${((height || 500) - 150)} px` : "600"}
         width={useTabs ? `${width || 600}` : undefined}
         style={useTabs && currentTab == 'code' ? { position: 'absolute', left: '-5000px' } : {}}
