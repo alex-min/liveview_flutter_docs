@@ -16,7 +16,7 @@ export function TopBar({ showMenuIcon, onClickMenuIcon }: Props) {
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static" className="bg-slate-800">
                 <Toolbar>
-                    {showMenuIcon ? <Button onClick={onClickMenuIcon} variant="text"><MenuIcon /></Button> : null}
+                    {showMenuIcon ? <Button onClick={onClickMenuIcon} variant="text"><MenuIcon style={{ color: 'white' }} /></Button> : null}
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Live View Flutter Docs
                     </Typography>

@@ -17,6 +17,7 @@ import ListItemText from '@mui/material/ListItemText';
 import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import useWindowDimensions from '../hooks/useWindowDimentions';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -78,6 +79,7 @@ function loadCode(code: string) {
 
 
 export function LivePad({ preload, useTabs }: { preload?: string, useTabs: boolean } = { useTabs: false }) {
+  var { width } = useWindowDimensions();
   var [currentTab, setCurrentTab] = React.useState('code');
   // @ts-ignore
   var [value, setValue] = React.useState(preload ? codeMap[preload] : demo);
@@ -138,14 +140,15 @@ export function LivePad({ preload, useTabs }: { preload?: string, useTabs: boole
     setValue(code);
     loadCode(code);
   });
+
   return <>
-    <div className={`flex ${useTabs ? 'flex-col items-center' : 'flex-row'} w-full justify-center mt-5`} style={useTabs ? { width: '600px' } : {}}>
+    <div className={`flex ${useTabs ? 'flex-col items-center' : 'flex-row'} w-full justify-center mt-5`} style={useTabs ? { width: `${width || 600}px` } : {}}>
       {useTabs ? <Tabs value={currentTab} aria-label="basic tabs example" onChange={(_, tab) => setCurrentTab(tab)}>
         <Tab label="Code" value="code" />
         <Tab label="Mobile View" value="mobile" />
       </Tabs> : null}
       {!useTabs || currentTab == 'code' ? <div className={`rounded-l-lg ${useTabs ? 'rounded-lg' : 'w-1/2'} overflow-hidden`}>
-        <div style={{ height: '600px', background: '#1e1e1e', width: useTabs ? '600px' : undefined }}>
+        <div style={{ height: '600px', background: '#1e1e1e', width: useTabs ? `${width || 600}px` : undefined }}>
           <div className="pl-6 py-1" style={{
             color: '#ce9178',
             fontFamily: 'Menlo, Monaco, Consolas, "Andale Mono", "Ubuntu Mono", "Courier New", monospace'
@@ -164,7 +167,7 @@ export function LivePad({ preload, useTabs }: { preload?: string, useTabs: boole
       <iframe id="flutter"
         src={`/flutter/index.html?r=${encodeURIComponent(initialCodeValue ?? '')}`}
         height="600"
-        width={useTabs ? '600' : undefined}
+        width={useTabs ? `${width || 600}` : undefined}
         style={useTabs && currentTab == 'code' ? { position: 'absolute', left: '-5000px' } : {}}
         className={`${useTabs ? 'rounded-lg' : 'w-1/2'} max-w-md rounded-r-lg bg-white`} />
       <Snackbar open={snackbarOpened}
