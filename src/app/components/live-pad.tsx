@@ -78,7 +78,7 @@ function loadCode(code: string) {
 }
 
 
-export function LivePad({ preload, useTabs }: { preload?: string, useTabs: boolean } = { useTabs: false }) {
+export function LivePad({ preload, useTabs }: { preload?: string, useTabs: boolean }) {
   var { width, height } = useWindowDimensions();
   var [currentTab, setCurrentTab] = React.useState('code');
   // @ts-ignore

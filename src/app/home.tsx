@@ -24,11 +24,11 @@ function ResponsiveMenu({ drawerOpened, setDrawerOpened }: { drawerOpened: boole
                 open={drawerOpened}
                 onClose={() => setDrawerOpened(false)}
             >
-                <Menu />
+                <Menu onClick={() => setDrawerOpened(false)} />
             </Drawer>
         </React.Fragment>
     }
-    return <Menu />;
+    return <Menu onClick={() => { }} />;
 }
 
 const Home = ({ preload }: { preload?: string }) => {

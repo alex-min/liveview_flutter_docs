@@ -31,7 +31,7 @@ enum NavbarItem {
   navigation, buttons, selects
 }
 
-export function Menu() {
+export function Menu({ onClick }: { onClick: () => void }) {
   const [open, setOpen] = useState(NavbarItem.navigation as NavbarItem | null);
 
   return <div className="bg-white text-sm" style={{ width: '300px' }}>
@@ -51,6 +51,7 @@ export function Menu() {
           <ListItemButton sx={{ pl: 4 }} onClick={() => {
             history.pushState({ component: 'AppBar' }, '', '/component/app-bar')
             emitter.emit('code-change', 'AppBar')
+            onClick();
           }}>
             <ListItemIcon>
               <ArtTrackIcon />
@@ -60,6 +61,7 @@ export function Menu() {
           <ListItemButton sx={{ pl: 4 }} onClick={() => {
             history.pushState({ component: 'BottomNavigationBar' }, '', '/component/bottom-navigation-bar')
             emitter.emit('code-change', 'BottomNavigationBar')
+            onClick();
           }
           }>
             <ListItemIcon>
@@ -70,6 +72,7 @@ export function Menu() {
           <ListItemButton sx={{ pl: 4 }} onClick={() => {
             history.pushState({ component: 'BottomAppBar' }, '', '/component/bottom-app-bar')
             emitter.emit('code-change', 'BottomAppBar')
+            onClick();
           }
           }>
             <ListItemIcon>
@@ -80,6 +83,7 @@ export function Menu() {
           <ListItemButton sx={{ pl: 4 }} onClick={() => {
             history.pushState({ component: 'PersistentFooterButton' }, '', '/component/persistent-footer-button')
             emitter.emit('code-change', 'PersistentFooterButton')
+            onClick();
           }
           }>
             <ListItemIcon>
@@ -90,6 +94,7 @@ export function Menu() {
           <ListItemButton sx={{ pl: 4 }} onClick={() => {
             history.pushState({ component: 'NavigationRail' }, '', '/component/navigation-rail')
             emitter.emit('code-change', 'NavigationRail')
+            onClick();
           }}>
             <ListItemIcon>
               <AutoAwesomeMosaicIcon />
@@ -110,6 +115,7 @@ export function Menu() {
           <ListItemButton sx={{ pl: 4 }} onClick={() => {
             history.pushState({ component: 'ElevatedButton' }, '', '/component/elevated-button')
             emitter.emit('code-change', 'ElevatedButton')
+            onClick();
           }}>
             <ListItemIcon>
               <Crop169Icon />
@@ -119,6 +125,7 @@ export function Menu() {
           <ListItemButton sx={{ pl: 4 }} onClick={() => {
             history.pushState({ component: 'ActionChip' }, '', '/component/action-chip')
             emitter.emit('code-change', 'ActionChip')
+            onClick();
           }}>
             <ListItemIcon>
               <Crop169Icon />
@@ -128,6 +135,7 @@ export function Menu() {
           <ListItemButton sx={{ pl: 4 }} onClick={() => {
             history.pushState({ component: 'SegmentedButton' }, '', '/component/segmented-button')
             emitter.emit('code-change', 'SegmentedButton')
+            onClick();
           }}>
             <ListItemIcon>
               <PowerInputIcon />
@@ -148,6 +156,7 @@ export function Menu() {
           <ListItemButton sx={{ pl: 4 }} onClick={() => {
             history.pushState({ component: 'DropdownButton' }, '', '/component/dropdown-button')
             emitter.emit('code-change', 'DropdownButton')
+            onClick();
           }}>
             <ListItemIcon>
               <BrandingWatermarkIcon />
@@ -159,6 +168,7 @@ export function Menu() {
       <ListItemButton onClick={() => {
         history.pushState({ component: 'TextField' }, '', '/component/text-field')
         emitter.emit('code-change', 'TextField')
+        onClick();
       }}>
         <ListItemIcon>
           <FormatColorTextIcon />
@@ -168,6 +178,7 @@ export function Menu() {
       <ListItemButton onClick={() => {
         history.pushState({ component: 'Form' }, '', '/component/form')
         emitter.emit('code-change', 'Form')
+        onClick();
       }}>
         <ListItemIcon>
           <AllInboxIcon />
@@ -177,6 +188,7 @@ export function Menu() {
       <ListItemButton onClick={() => {
         history.pushState({ component: 'Badge' }, '', '/component/badge')
         emitter.emit('code-change', 'Badge')
+        onClick();
       }}>
         <ListItemIcon>
           <AddToPhotosIcon />
@@ -186,6 +198,7 @@ export function Menu() {
       <ListItemButton onClick={() => {
         history.pushState({ component: 'Tooltip' }, '', '/component/tooltip')
         emitter.emit('code-change', 'Tooltip')
+        onClick();
       }}>
         <ListItemIcon>
           <MouseIcon />
