@@ -21,9 +21,14 @@ import Crop169Icon from '@mui/icons-material/Crop169';
 import PowerInputIcon from '@mui/icons-material/PowerInput';
 import FormatColorTextIcon from '@mui/icons-material/FormatColorText';
 import AllInboxIcon from '@mui/icons-material/AllInbox';
+import AddToPhotosIcon from '@mui/icons-material/AddToPhotos';
+import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion';
+import BrandingWatermarkIcon from '@mui/icons-material/BrandingWatermark';
+import MouseIcon from '@mui/icons-material/Mouse';
+import BorderBottomIcon from '@mui/icons-material/BorderBottom';
 
 enum NavbarItem {
-  navigation, buttons
+  navigation, buttons, selects
 }
 
 export function Menu() {
@@ -31,10 +36,10 @@ export function Menu() {
 
   return <div className="bg-white text-sm" style={{ width: '300px' }}>
     <div className="bg-white p-4">
-      List of all the component demos
+      Demo of all the components
     </div>
     <List dense={true}>
-      <ListItemButton onClick={() => setOpen(open == NavbarItem.navigation ? null: NavbarItem.navigation)}>
+      <ListItemButton onClick={() => setOpen(open == NavbarItem.navigation ? null : NavbarItem.navigation)}>
         <ListItemIcon>
           <MapIcon />
         </ListItemIcon>
@@ -61,6 +66,26 @@ export function Menu() {
               <HomeMaxIcon />
             </ListItemIcon>
             <ListItemText primary="Bottom navigation bar" />
+          </ListItemButton>
+          <ListItemButton sx={{ pl: 4 }} onClick={() => {
+            history.pushState({ component: 'BottomAppBar' }, '', '/component/bottom-app-bar')
+            emitter.emit('code-change', 'BottomAppBar')
+          }
+          }>
+            <ListItemIcon>
+              <HomeMaxIcon />
+            </ListItemIcon>
+            <ListItemText primary="Bottom app bar" />
+          </ListItemButton>
+          <ListItemButton sx={{ pl: 4 }} onClick={() => {
+            history.pushState({ component: 'PersistentFooterButton' }, '', '/component/persistent-footer-button')
+            emitter.emit('code-change', 'PersistentFooterButton')
+          }
+          }>
+            <ListItemIcon>
+              <BorderBottomIcon />
+            </ListItemIcon>
+            <ListItemText primary="Persistent footer buttons" />
           </ListItemButton>
           <ListItemButton sx={{ pl: 4 }} onClick={() => {
             history.pushState({ component: 'NavigationRail' }, '', '/component/navigation-rail')
@@ -92,6 +117,15 @@ export function Menu() {
             <ListItemText primary="Elevated Button" />
           </ListItemButton>
           <ListItemButton sx={{ pl: 4 }} onClick={() => {
+            history.pushState({ component: 'ActionChip' }, '', '/component/action-chip')
+            emitter.emit('code-change', 'ActionChip')
+          }}>
+            <ListItemIcon>
+              <Crop169Icon />
+            </ListItemIcon>
+            <ListItemText primary="Action chip" />
+          </ListItemButton>
+          <ListItemButton sx={{ pl: 4 }} onClick={() => {
             history.pushState({ component: 'SegmentedButton' }, '', '/component/segmented-button')
             emitter.emit('code-change', 'SegmentedButton')
           }}>
@@ -102,23 +136,61 @@ export function Menu() {
           </ListItemButton>
         </List>
       </Collapse>
-      <ListItemButton onClick={() => {
-            history.pushState({ component: 'TextField' }, '', '/component/text-field')
-            emitter.emit('code-change', 'TextField')
+      <ListItemButton onClick={() => setOpen(open == NavbarItem.selects ? null : NavbarItem.selects)}>
+        <ListItemIcon>
+          <AutoAwesomeMotionIcon />
+        </ListItemIcon>
+        <ListItemText primary="Selects" />
+        {open == NavbarItem.selects ? <ExpandLess /> : <ExpandMore />}
+      </ListItemButton>
+      <Collapse in={open == NavbarItem.selects} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding dense={true}>
+          <ListItemButton sx={{ pl: 4 }} onClick={() => {
+            history.pushState({ component: 'DropdownButton' }, '', '/component/dropdown-button')
+            emitter.emit('code-change', 'DropdownButton')
           }}>
+            <ListItemIcon>
+              <BrandingWatermarkIcon />
+            </ListItemIcon>
+            <ListItemText primary="Dropdown button" />
+          </ListItemButton>
+        </List>
+      </Collapse>
+      <ListItemButton onClick={() => {
+        history.pushState({ component: 'TextField' }, '', '/component/text-field')
+        emitter.emit('code-change', 'TextField')
+      }}>
         <ListItemIcon>
           <FormatColorTextIcon />
         </ListItemIcon>
         <ListItemText primary="Text Field" />
       </ListItemButton>
       <ListItemButton onClick={() => {
-            history.pushState({ component: 'Form' }, '', '/component/form')
-            emitter.emit('code-change', 'Form')
-          }}>
+        history.pushState({ component: 'Form' }, '', '/component/form')
+        emitter.emit('code-change', 'Form')
+      }}>
         <ListItemIcon>
           <AllInboxIcon />
         </ListItemIcon>
         <ListItemText primary="Form" />
+      </ListItemButton>
+      <ListItemButton onClick={() => {
+        history.pushState({ component: 'Badge' }, '', '/component/badge')
+        emitter.emit('code-change', 'Badge')
+      }}>
+        <ListItemIcon>
+          <AddToPhotosIcon />
+        </ListItemIcon>
+        <ListItemText primary="Badge" />
+      </ListItemButton>
+      <ListItemButton onClick={() => {
+        history.pushState({ component: 'Tooltip' }, '', '/component/tooltip')
+        emitter.emit('code-change', 'Tooltip')
+      }}>
+        <ListItemIcon>
+          <MouseIcon />
+        </ListItemIcon>
+        <ListItemText primary="Tooltip" />
       </ListItemButton>
     </List>
   </div>
