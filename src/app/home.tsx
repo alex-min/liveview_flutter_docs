@@ -11,7 +11,7 @@ import HomeMaxIcon from '@mui/icons-material/HomeMax';
 import ListItemText from '@mui/material/ListItemText';
 
 var breakpoints = {
-    menu: 1140
+    menu: 480
 }
 
 function ResponsiveMenu({ drawerOpened, setDrawerOpened }: { drawerOpened: boolean, setDrawerOpened: (val: boolean) => void }) {
