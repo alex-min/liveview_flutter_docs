@@ -4,10 +4,10 @@ let codeMap = {
     `<flutter>
   <viewBody />
   <BottomNavigationBar initialValue="0" selectedItemColor="blue-500">
-    <BottomNavigationBarItem icon="home" label="Home" />
-    <BottomNavigationBarItem icon="wallet" label="Wallet" />
-    <BottomNavigationBarItem icon="apps" label="Photos" />
-    <BottomNavigationBarItem icon="window" label="Albums" />
+    <BottomNavigationBarItem icon="home" label="Home" live-patch="/page/0" />
+    <BottomNavigationBarItem icon="wallet" label="Wallet" live-patch="/page/1" />
+    <BottomNavigationBarItem icon="apps" label="Photos" live-patch="/page/2" />
+    <BottomNavigationBarItem icon="window" label="Albums" live-patch="/page/3" />
   </BottomNavigationBar>
 </flutter>
 `, "AppBar": `<flutter>

@@ -68,8 +68,8 @@ function loadCode(code: string) {
 export function LivePad({ preload }: { preload?: string } = {}) {
   // @ts-ignore
   var [value, setValue] = React.useState(preload ? codeMap[preload] : demo);
-    // @ts-ignore
-  var initialCodeValue = React.useMemo(() => preload ? codeMap[preload] : demo,  [preload]);
+  // @ts-ignore
+  var initialCodeValue = React.useMemo(() => preload ? codeMap[preload] : demo, [preload]);
 
   var [snackbarOpened, setSnackbarOpened] = React.useState(false);
   var [snackbarEvent, setSnackbarEvent] = React.useState('');
@@ -83,9 +83,30 @@ export function LivePad({ preload }: { preload?: string } = {}) {
         var data = event.data as any;
         if (typeof data.type != 'string') { return }
 
-        setSnackbarEvent(data.data.event)
-        setSnackbarMessage(data.data.value);
-        setSnackbarOpened(true);
+        if (data.type == 'live-patch') {
+          // @ts-ignore
+          var code = (preload ? codeMap[preload] : demo) + '';
+          if (data.url.match(/\/page\/\d/g)) {
+            var path = data.url.split('/')
+            code = code.split('\n').map((line) => {
+              if (line.indexOf('<BottomNavigationBar') != -1 || line.indexOf('<NavigationRail') != -1) {
+                return line.replaceAll(/initialValue="\d"/g, `initialValue="${path[path.length - 1]}"`);
+              }
+              return line;
+            }).join('\n')
+          }
+
+          setSnackbarEvent('live-patch');
+          setSnackbarMessage(`Navigating to ${data.url}`)
+          setSnackbarOpened(true);
+          setTimeout(() =>
+            // @ts-ignore
+            loadCode(code), 50);
+        } else {
+          setSnackbarEvent(data.data.event)
+          setSnackbarMessage(data.data.value);
+          setSnackbarOpened(true);
+        }
       }, false)
   }, []);
 
@@ -128,23 +149,23 @@ export function LivePad({ preload }: { preload?: string } = {}) {
       autoHideDuration={3000}
       onClose={() => setSnackbarOpened(false)}
       message={<List dense>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <ArrowForwardIosIcon color="info" />
-              </ListItemIcon>
-              <ListItemText primary={`Server event: ${snackbarEvent}`} />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                <DataObjectIcon color="info" />
-              </ListItemIcon>
-              <ListItemText primary={`Message sent: ${snackbarMessage}`} />
-            </ListItemButton>
-          </ListItem>
-        </List>} 
-      />
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <ArrowForwardIosIcon color="info" />
+            </ListItemIcon>
+            <ListItemText primary={`Server event: ${snackbarEvent}`} />
+          </ListItemButton>
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemButton>
+            <ListItemIcon>
+              <DataObjectIcon color="info" />
+            </ListItemIcon>
+            <ListItemText primary={`Message sent: ${snackbarMessage}`} />
+          </ListItemButton>
+        </ListItem>
+      </List>}
+    />
   </div>
 }
