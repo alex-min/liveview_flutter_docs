@@ -9,7 +9,6 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import HomeMaxIcon from '@mui/icons-material/HomeMax';
 import ListItemText from '@mui/material/ListItemText';
-import { PageProps } from '../../.next/types/app/page';
 
 var breakpoints = {
     menu: 1140
