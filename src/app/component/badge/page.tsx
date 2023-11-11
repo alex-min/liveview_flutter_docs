@@ -1,5 +1,5 @@
 'use client';
-import Home from '../../page';
+import { Home } from '../../home';
 
 export default function Page() {
   return <Home preload="Badge" />;
