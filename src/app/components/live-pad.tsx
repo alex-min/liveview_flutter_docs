@@ -79,7 +79,7 @@ function loadCode(code: string) {
 
 
 export function LivePad({ preload, useTabs }: { preload?: string, useTabs: boolean } = { useTabs: false }) {
-  var { width } = useWindowDimensions();
+  var { width, height } = useWindowDimensions();
   var [currentTab, setCurrentTab] = React.useState('code');
   // @ts-ignore
   var [value, setValue] = React.useState(preload ? codeMap[preload] : demo);
@@ -148,7 +148,12 @@ export function LivePad({ preload, useTabs }: { preload?: string, useTabs: boole
         <Tab label="Mobile View" value="mobile" />
       </Tabs> : null}
       {!useTabs || currentTab == 'code' ? <div className={`rounded-l-lg ${useTabs ? 'rounded-lg' : 'w-1/2'} overflow-hidden`}>
-        <div style={{ height: '600px', background: '#1e1e1e', width: useTabs ? `${width || 600}px` : undefined }}>
+        <div style={{
+          height: useTabs ? `${((height || 500) - 150)} px` : '600px',
+          background: '#1e1e1e',
+          width: useTabs ? `${width || 600}px` : undefined
+        }
+        }>
           <div className="pl-6 py-1" style={{
             color: '#ce9178',
             fontFamily: 'Menlo, Monaco, Consolas, "Andale Mono", "Ubuntu Mono", "Courier New", monospace'
@@ -157,7 +162,7 @@ export function LivePad({ preload, useTabs }: { preload?: string, useTabs: boole
             autoFocus
             lang="xml"
             value={value}
-            height="590px"
+            height={useTabs ? `${((height || 500) - 180)}px` : '590px'}
             theme={vscodeDark}
             // @ts-expect-error
             extensions={[xml({ base: xmlLanguage, codeLanguages: languages })]}
@@ -166,7 +171,7 @@ export function LivePad({ preload, useTabs }: { preload?: string, useTabs: boole
       </div> : null}
       <iframe id="flutter"
         src={`/flutter/index.html?r=${encodeURIComponent(initialCodeValue ?? '')}`}
-        height="600"
+        height={useTabs ? `${((height || 500) - 150)} px` : "600"}
         width={useTabs ? `${width || 600}` : undefined}
         style={useTabs && currentTab == 'code' ? { position: 'absolute', left: '-5000px' } : {}}
         className={`${useTabs ? 'rounded-lg' : 'w-1/2'} max-w-md rounded-r-lg bg-white`} />
