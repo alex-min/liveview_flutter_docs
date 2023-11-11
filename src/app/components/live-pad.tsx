@@ -18,6 +18,7 @@ import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import useWindowDimensions from '../hooks/useWindowDimentions';
+import { EditorView } from 'codemirror';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -165,7 +166,7 @@ export function LivePad({ preload, useTabs }: { preload?: string, useTabs: boole
             height={useTabs ? `${((height || 500) - 180)}px` : '590px'}
             theme={vscodeDark}
             // @ts-expect-error
-            extensions={[xml({ base: xmlLanguage, codeLanguages: languages })]}
+            extensions={[xml({ base: xmlLanguage, codeLanguages: languages }), EditorView.lineWrapping]}
             onChange={(val) => loadCode(val)} />
         </div>
       </div> : null}
