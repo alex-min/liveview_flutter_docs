@@ -19,6 +19,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import useWindowDimensions from '../hooks/useWindowDimentions';
 import { EditorView } from 'codemirror';
+import { SendToMobile } from '@mui/icons-material';
 
 const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
   props,
@@ -130,7 +131,11 @@ export function LivePad({ preload, useTabs }: { preload?: string, useTabs: boole
   React.useEffect(() => {
     var iframe = document.getElementById('flutter') as HTMLIFrameElement;
     if (iframe) {
-      iframe.src = iframe.src + `&s=${new Date().getTime()}`
+      if (useTabs && currentTab == 'mobile') {
+        iframe.src = `/flutter/index.html?r=${encodeURIComponent(value)}&s=${new Date().getTime()}`;
+      } else {
+        iframe.src = iframe.src + `&s=${new Date().getTime()}`
+      }
     }
   }, [currentTab]);
 
@@ -143,12 +148,11 @@ export function LivePad({ preload, useTabs }: { preload?: string, useTabs: boole
   });
 
   return <>
-    <div className={`flex ${useTabs ? 'flex-col items-center' : 'flex-row'} w-full justify-center mt-5`} style={useTabs ? { width: `${width || 600}px` } : {}}>
-      {useTabs ? <Tabs value={currentTab} aria-label="basic tabs example" onChange={(_, tab) => {
-        setCurrentTab(tab)
-      }}>
-        <Tab label="Code" value="code" />
-        <Tab label="Mobile View" value="mobile" />
+    <div className={`flex ${useTabs ? 'flex-col items-center' : 'flex-row'} w-full justify-center mt-5`}
+      style={useTabs ? { width: `${width || 600}px` } : {}}>
+      {useTabs ? <Tabs value={currentTab} aria-label="basic tabs example" onChange={(_, tab) => setCurrentTab(tab)} className='bg-slate-300 rounded-t-lg'>
+        <Tab label="Code" value="code" icon={<DataObjectIcon />} iconPosition='end' />
+        <Tab label="Mobile View" value="mobile" icon={<SendToMobile />} iconPosition='end' />
       </Tabs> : null}
       {!useTabs || currentTab == 'code' ? <div className={`rounded-l-lg ${useTabs ? 'rounded-lg' : 'w-1/2'} overflow-hidden`}>
         <div style={{
@@ -173,13 +177,13 @@ export function LivePad({ preload, useTabs }: { preload?: string, useTabs: boole
         </div>
       </div> : null}
       <iframe id="flutter"
-        src={`/flutter/index.html?r=${encodeURIComponent(useTabs ? value : (initialCodeValue || ''))}`}
+        src={`/flutter/index.html?r=${encodeURIComponent(initialCodeValue)}`}
         height={useTabs ? `${((height || 500) - 150)} px` : "600"}
         width={useTabs ? `${width || 600}` : undefined}
         style={useTabs && currentTab == 'code' ? { position: 'absolute', left: '-5000px' } : {}}
         className={`${useTabs ? 'rounded-lg' : 'w-1/2'} max-w-md rounded-r-lg bg-white`} />
       <Snackbar open={snackbarOpened}
-        autoHideDuration={useTabs ? 1000 : 3000}
+        autoHideDuration={useTabs ? 500 : 3000}
         onClose={() => setSnackbarOpened(false)}
         anchorOrigin={useTabs ? { vertical: 'top', horizontal: 'right' } : { vertical: 'bottom', horizontal: 'left' }}
         message={<List dense>
