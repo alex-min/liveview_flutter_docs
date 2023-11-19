@@ -26,6 +26,8 @@ import AutoAwesomeMotionIcon from '@mui/icons-material/AutoAwesomeMotion';
 import BrandingWatermarkIcon from '@mui/icons-material/BrandingWatermark';
 import MouseIcon from '@mui/icons-material/Mouse';
 import BorderBottomIcon from '@mui/icons-material/BorderBottom';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import ChecklistIcon from '@mui/icons-material/Checklist';
 
 enum NavbarItem {
   navigation, buttons, selects
@@ -142,6 +144,17 @@ export function Menu({ onClick }: { onClick: () => void }) {
             </ListItemIcon>
             <ListItemText primary="Segmented Button" />
           </ListItemButton>
+          <ListItemButton sx={{ pl: 4 }} onClick={() => {
+            history.pushState({ component: 'IconButton' }, '', '/component/icon-button')
+            emitter.emit('code-change', 'IconButton')
+            onClick();
+          }
+          }>
+            <ListItemIcon>
+              <AccountCircleIcon />
+            </ListItemIcon>
+            <ListItemText primary="Icon Button" />
+          </ListItemButton>
         </List>
       </Collapse>
       <ListItemButton onClick={() => setOpen(open == NavbarItem.selects ? null : NavbarItem.selects)}>
@@ -204,6 +217,16 @@ export function Menu({ onClick }: { onClick: () => void }) {
           <MouseIcon />
         </ListItemIcon>
         <ListItemText primary="Tooltip" />
+      </ListItemButton>
+      <ListItemButton onClick={() => {
+        history.pushState({ component: 'ListTile' }, '', '/component/list-tile')
+        emitter.emit('code-change', 'ListTile')
+        onClick();
+      }}>
+        <ListItemIcon>
+          <ChecklistIcon />
+        </ListItemIcon>
+        <ListItemText primary="List tile" />
       </ListItemButton>
     </List>
   </div>

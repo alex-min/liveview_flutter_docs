@@ -52,6 +52,31 @@ let codeMap = {
   </viewBody>
 </flutter>
 `,
+  "IconButton": `<flutter>
+<viewBody>
+  <Row mainAxisAlignment="center>
+    <IconButton icon="home" />
+    <Container margin="0 10">
+      <IconButton icon="home" filled="true" />
+    </Container>
+    <Container margin="0 10">
+      <IconButton icon="home" filledTonal="true" />
+    </Container>
+  </Row>
+</viewBody>
+</flutter>
+`,
+  "ListTile": `<flutter>
+  <viewBody>
+    <Container>
+      <ListTile tileColor="deepPurpleShade200">
+        <title>my list tile</title>
+        <subtitle>subtitle here</subtitle>
+      </ListTile>
+      <Text>hello</Text>
+    </Container>
+  </viewBody>
+  </flutter>`,
   "BottomAppBar": `
 <flutter>
   <viewBody floatingActionButtonLocation="centerDocked">
